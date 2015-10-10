@@ -177,14 +177,16 @@ public class CalendarSyncService extends Service implements
 		CalendarEntry insertedEntry = entries.findValue(date.beginTime, date);
 		OrgNodePayload payload = node.getOrgNodePayload();
 
-		if (insertedEntry != null) {
+		CalendarEntry newEntry = new CalendarEntry(date, payload, filename);
+
+		if (insertedEntry != null && insertedEntry.equals(newEntry)) {
 			entries.remove(date.beginTime, insertedEntry);
 			unchanged++;
-		} else {
-			calendarWrapper.insertEntry(date, node.getCleanedPayload(), filename, 
-						payload.getProperty("LOCATION"), payload.getProperty(ORG_PROP_BUSY));
-			inserted++;
+			return;
 		}
+
+		calendarWrapper.insertEntry(newEntry);
+		inserted++;
 	}
 
 	private boolean shouldInsertEntry(String todo, OrgNodeDate date) {
@@ -232,13 +234,20 @@ public class CalendarSyncService extends Service implements
 	
 	
 	private void assimilateCalendar() {
-		Cursor query = calendarWrapper.getUnassimilatedCalendarCursor();
+		Cursor eventsQuery = calendarWrapper.getUnassimilatedCalendarCursor();
 		
 		CalendarEntriesParser entriesParser = new CalendarEntriesParser(
-				calendarWrapper.calendar.events, query);
+				calendarWrapper.calendar.events, eventsQuery);
 				
-		while(query.isAfterLast() == false) {
-			CalendarEntry entry = entriesParser.getEntryFromCursor(query);
+		while(!eventsQuery.isAfterLast()) {
+			CalendarEntry entry = entriesParser.getEntryFromCursor(eventsQuery);
+			Cursor cur = calendarWrapper.getUnassimilatedCalendarRemindersCursor(entry.id);
+
+			while(!cur.isAfterLast()) {
+				entry.reminderTime = cur.getInt(cur.getColumnIndexOrThrow(calendarWrapper.calendar.reminders.MINUTES));
+				cur.moveToNext();
+			}
+
 			OrgNode node = entry.convertToOrgNode();
 			
 			OrgFile captureFile = OrgProviderUtils
@@ -252,10 +261,10 @@ public class CalendarSyncService extends Service implements
 			if (this.pullDelete)
 				calendarWrapper.deleteEntry(entry);
 			
-			query.moveToNext();
+			eventsQuery.moveToNext();
 		}
 		
-		query.close();
+		eventsQuery.close();
 		OrgUtils.announceSyncDone(this);
 	}
 

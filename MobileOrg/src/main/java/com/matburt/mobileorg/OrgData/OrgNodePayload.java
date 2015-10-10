@@ -21,6 +21,7 @@ public class OrgNodePayload {
 	private String scheduled = null;
 	private String deadline = null;
 	private String timestamp = null;
+	private String reminderTime = null;
 	
 	public OrgNodePayload(String payload) {
 		if(payload == null)
@@ -59,9 +60,8 @@ public class OrgNodePayload {
 	
 	public String getId() {
 		if(this.id == null)
-			stripProperties();
-			//this.id = getProperty("ID");
-		
+			this.id = getProperty("ID");
+
 		return this.id;
 	}
 
@@ -108,11 +108,21 @@ public class OrgNodePayload {
 		this.scheduled = getScheduled();
 		this.deadline = getDeadline();
 		this.timestamp = getTimestamp();
+		this.reminderTime = getReminderTime();
 
 		stripProperties();
 		stripFileProperties();
 	}
-	
+
+	public String getReminderTime() {
+		if (this.reminderTime == null) {
+			String _reminderTime = getProperty("REMINDER_TIME");
+			this.reminderTime = _reminderTime.isEmpty() ? "0" : _reminderTime;
+		}
+
+		return this.reminderTime;
+	}
+
 	public String getScheduled() {
 		if(this.scheduled == null)
 			this.scheduled = stripDate(OrgNodeTimeDate.TYPE.Scheduled);
@@ -209,6 +219,9 @@ public class OrgNodePayload {
 				String value = cleanPayload.substring(propm.end(), end);
 				if(name.equals(":ID:") || name.equals(":ORIGINAL_ID:")) {
 					this.id = value.trim();
+				}
+				if (name.equals(":REMINDER_TIME:")){
+					this.reminderTime = value.trim();
 				}
 			}
 			properties.add(cleanPayload.substring(start, end) + "\n");

@@ -14,7 +14,7 @@ public class CalendarEntriesParser {
 	private int locationColumn;
 	private int allDayColumn;
 
-	public CalendarEntriesParser(intEvents events, Cursor cursor) {		
+	public CalendarEntriesParser(intEvents events, Cursor cursor) {
 		dtStartColumn = cursor.getColumnIndexOrThrow(events.DTSTART);
 		dtEndColumn = cursor.getColumnIndexOrThrow(events.DTEND);
 		titleColumn = cursor.getColumnIndexOrThrow(events.TITLE);

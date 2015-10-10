@@ -12,11 +12,10 @@ import android.text.format.Time;
 
 import com.matburt.mobileorg.R;
 import com.matburt.mobileorg.OrgData.CalendarEntry;
-import com.matburt.mobileorg.OrgData.OrgNodeDate;
 
 public class CalendarWrapper {
 
-	private final static String CALENDAR_ORGANIZER = "MobileOrg";
+	public final static String CALENDAR_ORGANIZER = "MobileOrg";
 	
 	private Context context;
 	private SharedPreferences sharedPreferences;
@@ -25,7 +24,7 @@ public class CalendarWrapper {
 
 	private String calendarName = "";
 	private int calendarId = -1;
-	private Integer reminderTime = 0;
+	private Integer defaultReminderTime = 0;
 	private boolean reminderEnabled = false;
 	
 	public CalendarWrapper(Context context) {
@@ -56,41 +55,40 @@ public class CalendarWrapper {
 				new String[] { CALENDAR_ORGANIZER + ":" + filename + "%" });
 	}
 	
-	public String insertEntry(OrgNodeDate date, String payload,
-			String filename, String location, String busy) throws IllegalArgumentException {
+	public String insertEntry( CalendarEntry entry ) throws IllegalArgumentException {
 
+		/* FIXME: It will just die here if calendar is not found */
 		if (this.calendarId == -1)
 			throw new IllegalArgumentException(
 					"Couldn't find selected calendar: " + calendarName);
 
 		ContentValues values = new ContentValues();
 		values.put(calendar.events.CALENDAR_ID, this.calendarId);
-		values.put(calendar.events.TITLE, date.getTitle());
-		values.put(calendar.events.DESCRIPTION, CALENDAR_ORGANIZER + ":"
-				+ filename + "\n" + payload);
-		values.put(calendar.events.EVENT_LOCATION, location);
+		values.put(calendar.events.TITLE, entry.title);
+		values.put(calendar.events.DESCRIPTION, entry.description);
+		values.put(calendar.events.EVENT_LOCATION, entry.location);
 
 		// If a busy state was given, send that info to calendar
-		if (busy != null) {
+		if (entry.busy != null) {
 			// Trying to be reasonably tolerant with respect to the accepted values.
-			if (busy.equals("nil") || busy.equals("0") ||
-			    busy.equals("no")  || busy.equals("available"))
+			if (entry.busy.equals("nil") || entry.busy.equals("0") ||
+			    entry.busy.equals("no")  || entry.busy.equals("available"))
 				values.put(calendar.events.AVAILABILITY, calendar.events.AVAILABILITY_FREE);
 		
-			else if (busy.equals("t")   || busy.equals("1") ||
-				 busy.equals("yes") || busy.equals("busy"))
+			else if (entry.busy.equals("t")   || entry.busy.equals("1") ||
+				 entry.busy.equals("yes") || entry.busy.equals("busy"))
 				values.put(calendar.events.AVAILABILITY, calendar.events.AVAILABILITY_BUSY);
 
-			else if (busy.equals("2") || busy.equals("tentative") || busy.equals("maybe"))
+			else if (entry.busy.equals("2") || entry.busy.equals("tentative") || entry.busy.equals("maybe"))
 				values.put(calendar.events.AVAILABILITY, calendar.events.AVAILABILITY_TENTATIVE);
 		}
 		
 		// Sync with google will overwrite organizer :(
 		// values.put(intEvents.ORGANIZER, embeddedNodeMetadata);
 
-		values.put(calendar.events.DTSTART, date.beginTime);
-		values.put(calendar.events.DTEND, date.endTime);
-		values.put(calendar.events.ALL_DAY, date.allDay);
+		values.put(calendar.events.DTSTART, entry.dtStart);
+		values.put(calendar.events.DTEND, entry.dtEnd);
+		values.put(calendar.events.ALL_DAY, entry.allDay);
 		values.put(calendar.events.HAS_ALARM, 0);
 		values.put(calendar.events.EVENT_TIMEZONE, Time.getCurrentTimezone());
 
@@ -98,19 +96,20 @@ public class CalendarWrapper {
 				calendar.events.CONTENT_URI, values);
 		String nodeID = uri.getLastPathSegment();
 
-		if (date.allDay == 0 && this.reminderEnabled)
-			addReminder(nodeID, date.beginTime, date.endTime);
+		if (entry.allDay == 0 && this.reminderEnabled){
+			addReminder(nodeID, entry.dtStart, entry.dtEnd, entry.reminderTime <= 0 ? this.defaultReminderTime : entry.reminderTime);
+		}
 
 		return nodeID;
 	}
 
 	
-	private void addReminder(String eventID, long beginTime, long endTime) {
+	private void addReminder(String eventID, long beginTime, long endTime, Integer reminderTime) {
 		if (beginTime < System.currentTimeMillis())
 			return;
 
 		ContentValues reminderValues = new ContentValues();
-		reminderValues.put(calendar.reminders.MINUTES, this.reminderTime);
+		reminderValues.put(calendar.reminders.MINUTES, reminderTime);
 		reminderValues.put(calendar.reminders.EVENT_ID, eventID);
 		reminderValues.put(calendar.reminders.METHOD,
 				calendar.reminders.METHOD_ALERT);
@@ -121,10 +120,10 @@ public class CalendarWrapper {
 		alertvalues.put(calendar.calendarAlerts.EVENT_ID, eventID);
 		alertvalues.put(calendar.calendarAlerts.BEGIN, beginTime);
 		alertvalues.put(calendar.calendarAlerts.END, endTime);
-		alertvalues.put(calendar.calendarAlerts.ALERT_TIME, this.reminderTime);
+		alertvalues.put(calendar.calendarAlerts.ALERT_TIME, reminderTime);
 		alertvalues.put(calendar.calendarAlerts.STATE,
 				calendar.calendarAlerts.STATE_SCHEDULED);
-		alertvalues.put(calendar.calendarAlerts.MINUTES, this.reminderTime);
+		alertvalues.put(calendar.calendarAlerts.MINUTES, reminderTime);
 		context.getContentResolver().insert(
 				calendar.calendarAlerts.CONTENT_URI, alertvalues);
 
@@ -162,6 +161,23 @@ public class CalendarWrapper {
 			cursor.close();
 		}
 		return -1;
+	}
+
+	public Cursor getUnassimilatedCalendarRemindersCursor(long eventID){
+		String[] columns = new String[]{
+				calendar.reminders.EVENT_ID,
+				calendar.reminders.MINUTES,
+				calendar.reminders.METHOD
+		};
+
+		Cursor query = context.getContentResolver().query(
+				calendar.reminders.CONTENT_URI,
+				columns,
+				calendar.reminders.EVENT_ID + "=?",
+				new String[] {String.valueOf(eventID)}, null);
+		query.moveToFirst();
+
+		return query;
 	}
 
 	public Cursor getUnassimilatedCalendarCursor() {
@@ -233,7 +249,7 @@ public class CalendarWrapper {
 			if (intervalString == null)
 				throw new IllegalArgumentException(
 						"Invalid calendar reminder interval");
-			this.reminderTime = Integer.valueOf(intervalString);
+			this.defaultReminderTime = Integer.valueOf(intervalString);
 		}
 		
 		this.calendarName = PreferenceManager.getDefaultSharedPreferences(

@@ -184,7 +184,7 @@
     <string name="preference_clear_calendar_promt_message">Are you sure you want to clear the phones\' calendar?</string>
     <string name="preference_calendar_reminder_summary">Add reminders for scheduled items to calendar</string>
     <string name="preference_calendar_reminder">Reminders</string>
-    <string name="preference_calendar_reminder_interval_summary">Sets the interval when an alarm is triggered</string>
+    <string name="preference_calendar_reminder_interval_summary">Sets the interval when an alarm is triggered and no :REMINDER_TIME: property is specified for the entry</string>
     <string name="preference_calendar_reminder_interval">Reminder interval</string>
     <string name="preference_calendar_show_habits_summary">Shows habits in the calendar</string>
     <string name="preference_calendar_show_habits">Show habits</string>
