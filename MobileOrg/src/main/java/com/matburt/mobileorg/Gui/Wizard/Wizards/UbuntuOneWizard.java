@@ -54,7 +54,10 @@ public class UbuntuOneWizard extends Wizard {
 				}
 			}
 		});
-		
+
+		SharedPreferences props = PreferenceManager.getDefaultSharedPreferences(context);
+		ubuntuoneEmail.setText(props.getString("webUrl", ""));
+
 		wizardView.addPage(view);
 		wizardView.setNavButtonStateOnPage(1, true, WizardView.MIDDLE_PAGE);
 		wizardView.disableAllNextActions(1);

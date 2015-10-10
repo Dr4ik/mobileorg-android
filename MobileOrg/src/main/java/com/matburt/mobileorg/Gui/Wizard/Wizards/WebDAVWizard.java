@@ -49,7 +49,12 @@ public class WebDAVWizard extends Wizard {
 				loginWebdav();
 			}
 		});
-		
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+		webdavUser.setText(prefs.getString("webUser", ""));
+		webdavUrl.setText(prefs.getString("webUrl", ""));
+
 		setupDoneButton(view);
 		wizardView.addPage(view);
 		wizardView.setNavButtonStateOnPage(1, true, WizardView.LAST_PAGE);
