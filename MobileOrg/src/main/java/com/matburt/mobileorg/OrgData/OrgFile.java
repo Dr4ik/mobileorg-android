@@ -43,10 +43,15 @@ public class OrgFile {
 	public OrgFile(long id, ContentResolver resolver) throws OrgFileNotFoundException {
 		Cursor cursor = resolver.query(Files.buildIdUri(id),
 				Files.DEFAULT_COLUMNS, null, null, null);
-		if(cursor == null || cursor.getCount() < 1)
-			throw new OrgFileNotFoundException("File with id \"" + id + "\" not found");
-		set(cursor);
-		cursor.close();
+        try {
+            if (cursor == null || cursor.getCount() < 1)
+                throw new OrgFileNotFoundException("File with id \"" + id + "\" not found");
+            set(cursor);
+        }finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        
 	}
 	
 	public OrgFile(String filename, ContentResolver resolver) throws OrgFileNotFoundException {

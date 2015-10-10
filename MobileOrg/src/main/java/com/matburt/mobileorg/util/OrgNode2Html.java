@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.matburt.mobileorg.Gui.Theme.DefaultTheme;
@@ -127,7 +126,7 @@ public class OrgNode2Html {
 
         if (this.viewNodePropertiesEnabled == true) {
 
-            HashMap includeFiles = new HashMap();
+            HashMap<String, Boolean> includeFiles = new HashMap<String, Boolean>();
             
             if (!this.propertiesDrawerFiles.equals("")) {
 
@@ -149,14 +148,14 @@ public class OrgNode2Html {
                 node.getPropertiesPayload() != null)
             {
             
-                HashMap propsHash = node.getPropertiesPayload();
-                Set tempSet = propsHash.keySet();
+                HashMap<String, String> propsHash = node.getPropertiesPayload();
+                Set<String> tempSet = propsHash.keySet();
                 // Put keys in tempSet into propsKeys in their 'natural'
                 // (lexicographic) order
-                TreeSet propsKeys = new TreeSet(tempSet); 
-                Iterator propsIterator = propsKeys.iterator();
+                TreeSet<String> propsKeys = new TreeSet<String>(tempSet); 
+                Iterator<String> propsIterator = propsKeys.iterator();
 
-                HashMap includeFields = new HashMap();
+                HashMap<String, Boolean> includeFields = new HashMap<String, Boolean>();
 
                 if (!this.propertiesDrawerFields.equals("")) {
                     Pattern fieldsPattern = Pattern.compile("(\\S+)");
@@ -167,14 +166,14 @@ public class OrgNode2Html {
                 
                 while (propsIterator.hasNext()) {
 
-                    String key = propsIterator.next().toString();
+                    String key = propsIterator.next();
 
                     if (this.propertiesDrawerFields.equals("") ||
                         (!includeFields.isEmpty() && includeFields.containsKey(key)))
                     {
-                        String value = propsHash.get(key).toString();
-                        result.append("<i>" + key + ":</i><br/>");
-                        result.append(value + "<br/><br/>");   
+                        String value = propsHash.get(key);
+                        result.append("<i>").append(key).append(":</i><br/>");
+                        result.append(value).append("<br/><br/>");   
                     }
                 }
                 

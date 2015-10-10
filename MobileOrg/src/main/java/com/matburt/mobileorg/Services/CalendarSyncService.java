@@ -247,7 +247,9 @@ public class CalendarSyncService extends Service implements
 				entry.reminderTime = cur.getInt(cur.getColumnIndexOrThrow(calendarWrapper.calendar.reminders.MINUTES));
 				cur.moveToNext();
 			}
-
+            
+            cur.close();
+            
 			OrgNode node = entry.convertToOrgNode();
 			
 			OrgFile captureFile = OrgProviderUtils
