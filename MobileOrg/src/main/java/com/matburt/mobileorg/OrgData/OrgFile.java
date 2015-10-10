@@ -50,12 +50,19 @@ public class OrgFile {
 	}
 	
 	public OrgFile(String filename, ContentResolver resolver) throws OrgFileNotFoundException {
-		Cursor cursor = resolver.query(Files.CONTENT_URI,
-				Files.DEFAULT_COLUMNS, Files.FILENAME + "=?", new String[] {filename}, null);
-		if(cursor == null || cursor.getCount() <= 0)
-			throw new OrgFileNotFoundException("File \"" + filename + "\" not found");
-		set(cursor);
-		cursor.close();
+        Cursor cursor = resolver.query(Files.CONTENT_URI,
+                Files.DEFAULT_COLUMNS, Files.FILENAME + "=?", new String[]{filename}, null);
+        try {
+            if (cursor == null || cursor.getCount() <= 0)
+                throw new OrgFileNotFoundException("File \"" + filename + "\" not found");
+            
+            set(cursor);
+        }
+        finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        
 	}
 	
 	public void set(Cursor cursor) throws OrgFileNotFoundException {
