@@ -25,7 +25,7 @@ public class CalendarEntry {
 		this.allDay = date.allDay;
 		this.reminderTime = Integer.valueOf(payload.getReminderTime());
 		this.busy = payload.getProperty(CalendarSyncService.ORG_PROP_BUSY);
-		this.description = CalendarWrapper.CALENDAR_ORGANIZER + ":" + filename + "\n" + payload;
+		this.description = CalendarWrapper.CALENDAR_ORGANIZER + ":" + filename + "\n" + payload.getCleanedPayload();
 		this.title = date.getTitle();
 	}
 
