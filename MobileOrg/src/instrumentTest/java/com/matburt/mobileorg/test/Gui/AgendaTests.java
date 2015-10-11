@@ -1,10 +1,10 @@
-package com.matburt.mobileorg.test.Gui;
+package com.draik.mobileorg.test.Gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.matburt.mobileorg.Gui.Agenda.OrgQueryBuilder;
-import com.matburt.mobileorg.Gui.Agenda.OrgAgenda;
+import com.draik.mobileorg.Gui.Agenda.OrgQueryBuilder;
+import com.draik.mobileorg.Gui.Agenda.OrgAgenda;
 
 import android.content.Context;
 import android.test.AndroidTestCase;

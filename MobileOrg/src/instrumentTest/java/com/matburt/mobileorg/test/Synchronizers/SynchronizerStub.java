@@ -1,4 +1,4 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import javax.net.ssl.SSLHandshakeException;
 
-import com.matburt.mobileorg.Synchronizers.SynchronizerInterface;
+import com.draik.mobileorg.Synchronizers.SynchronizerInterface;
 
 public class SynchronizerStub implements SynchronizerInterface {
 

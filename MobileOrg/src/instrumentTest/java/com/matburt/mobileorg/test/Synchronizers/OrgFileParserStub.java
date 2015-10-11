@@ -1,13 +1,13 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
 import android.content.ContentResolver;
 
-import com.matburt.mobileorg.OrgData.OrgDatabase;
-import com.matburt.mobileorg.OrgData.OrgFile;
-import com.matburt.mobileorg.OrgData.OrgFileParser;
+import com.draik.mobileorg.OrgData.OrgDatabase;
+import com.draik.mobileorg.OrgData.OrgFile;
+import com.draik.mobileorg.OrgData.OrgFileParser;
 
 public class OrgFileParserStub extends OrgFileParser {
 	ArrayList<String> filesParsed = new ArrayList<String>();

@@ -25,7 +25,7 @@
         android:paddingTop="3dip" >
 
         <fragment
-            android:name="com.matburt.mobileorg.Gui.Capture.LocationFragment"
+            android:name="com.draik.mobileorg.Gui.Capture.LocationFragment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:tag="captureLocationFragment" />

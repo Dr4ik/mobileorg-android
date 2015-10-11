@@ -1,4 +1,4 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -9,13 +9,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.test.ProviderTestCase2;
 
-import com.matburt.mobileorg.OrgData.OrgDatabase;
-import com.matburt.mobileorg.OrgData.OrgEdit;
-import com.matburt.mobileorg.OrgData.OrgFile;
-import com.matburt.mobileorg.OrgData.OrgNode;
-import com.matburt.mobileorg.OrgData.OrgProvider;
-import com.matburt.mobileorg.Synchronizers.Synchronizer;
-import com.matburt.mobileorg.test.util.OrgTestFiles.SimpleOrgFiles;
+import com.draik.mobileorg.OrgData.OrgDatabase;
+import com.draik.mobileorg.OrgData.OrgEdit;
+import com.draik.mobileorg.OrgData.OrgFile;
+import com.draik.mobileorg.OrgData.OrgNode;
+import com.draik.mobileorg.OrgData.OrgProvider;
+import com.draik.mobileorg.Synchronizers.Synchronizer;
+import com.draik.mobileorg.test.util.OrgTestFiles.SimpleOrgFiles;
 
 public class SynchronizerTest extends ProviderTestCase2<OrgProvider> {
 

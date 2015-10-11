@@ -1,4 +1,4 @@
-package com.matburt.mobileorg.test.util;
+package com.draik.mobileorg.test.util;
 
 public class OrgTestFiles {
 

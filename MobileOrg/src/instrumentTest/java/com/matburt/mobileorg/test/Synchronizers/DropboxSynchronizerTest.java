@@ -1,11 +1,11 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 import android.test.AndroidTestCase;
 
-import com.matburt.mobileorg.Synchronizers.DropboxSynchronizer;
+import com.draik.mobileorg.Synchronizers.DropboxSynchronizer;
 
 /**
  * This test case uses the actual dropbox synchronizer. This means that the

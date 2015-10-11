@@ -1,9 +1,9 @@
-package com.matburt.mobileorg.test.OrgData;
+package com.draik.mobileorg.test.OrgData;
 
 import android.content.Context;
 
-import com.matburt.mobileorg.OrgData.OrgDatabase;
-import com.matburt.mobileorg.OrgData.OrgNode;
+import com.draik.mobileorg.OrgData.OrgDatabase;
+import com.draik.mobileorg.OrgData.OrgNode;
 
 public class OrgDatabaseStub extends OrgDatabase {
 

@@ -1,11 +1,11 @@
-package com.matburt.mobileorg.test.OrgData;
+package com.draik.mobileorg.test.OrgData;
 
 import java.util.ArrayList;
 
 import android.test.AndroidTestCase;
 
-import com.matburt.mobileorg.OrgData.OrgNode;
-import com.matburt.mobileorg.OrgData.OrgNodeParser;
+import com.draik.mobileorg.OrgData.OrgNode;
+import com.draik.mobileorg.OrgData.OrgNodeParser;
 
 public class OrgNodeParserTest extends AndroidTestCase {
 	public void testParseLineIntoNodeSimple() {

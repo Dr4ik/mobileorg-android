@@ -1,8 +1,8 @@
-package com.matburt.mobileorg.test.OrgData;
+package com.draik.mobileorg.test.OrgData;
 
 import java.util.Calendar;
 
-import com.matburt.mobileorg.OrgData.OrgNodeDate;
+import com.draik.mobileorg.OrgData.OrgNodeDate;
 
 import android.test.AndroidTestCase;
 

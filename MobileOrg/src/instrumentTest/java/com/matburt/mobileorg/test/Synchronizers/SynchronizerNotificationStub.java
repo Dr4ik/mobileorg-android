@@ -1,8 +1,8 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import android.content.Context;
 
-import com.matburt.mobileorg.Gui.SynchronizerNotificationCompat;
+import com.draik.mobileorg.Gui.SynchronizerNotificationCompat;
 
 public class SynchronizerNotificationStub extends SynchronizerNotificationCompat {
 

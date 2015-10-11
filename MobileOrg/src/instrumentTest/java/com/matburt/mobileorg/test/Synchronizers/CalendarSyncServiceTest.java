@@ -1,9 +1,9 @@
-package com.matburt.mobileorg.test.Synchronizers;
+package com.draik.mobileorg.test.Synchronizers;
 
 import java.util.ArrayList;
 
-import com.matburt.mobileorg.OrgData.OrgNode;
-import com.matburt.mobileorg.OrgData.OrgNodeDate;
+import com.draik.mobileorg.OrgData.OrgNode;
+import com.draik.mobileorg.OrgData.OrgNodeDate;
 
 import android.test.AndroidTestCase;
 

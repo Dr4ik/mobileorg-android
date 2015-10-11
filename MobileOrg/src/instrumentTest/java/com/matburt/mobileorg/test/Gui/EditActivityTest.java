@@ -1,15 +1,15 @@
-package com.matburt.mobileorg.test.Gui;
+package com.draik.mobileorg.test.Gui;
 
 import android.app.Instrumentation;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.matburt.mobileorg.Gui.Capture.EditActivity;
-import com.matburt.mobileorg.Gui.Capture.EditActivityController;
-import com.matburt.mobileorg.OrgData.OrgNode;
-import com.matburt.mobileorg.OrgData.OrgContract.OrgData;
-import com.matburt.mobileorg.test.util.OrgTestUtils;
+import com.draik.mobileorg.Gui.Capture.EditActivity;
+import com.draik.mobileorg.Gui.Capture.EditActivityController;
+import com.draik.mobileorg.OrgData.OrgNode;
+import com.draik.mobileorg.OrgData.OrgContract.OrgData;
+import com.draik.mobileorg.test.util.OrgTestUtils;
 
 public class EditActivityTest extends ActivityInstrumentationTestCase2<EditActivity> {
 
