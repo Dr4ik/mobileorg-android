@@ -211,7 +211,7 @@ public class OrgProviderUtils {
 			OrgNode node = new OrgNode(node_id, resolver);
 			
 			if(level != 0) // Don't add top level file node heading
-				result.append(node.toString() + "\n");
+				result.append(node.toString()).append("\n");
 			
 			for (OrgNode child : node.getChildren(resolver))
 				result.append(nodesToString(child.id, level + 1, resolver));

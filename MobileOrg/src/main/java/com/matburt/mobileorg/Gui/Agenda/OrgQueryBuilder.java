@@ -254,7 +254,7 @@ public class OrgQueryBuilder implements Serializable {
 			return "";
 		
 		for (String value: values) {
-			builder.append(column + " LIKE '%" + value + "%'").append(" OR ");
+			builder.append(column).append(" LIKE '%").append(value).append("%'").append(" OR ");
 		}
 		
 		builder.delete(builder.length() - " OR ".length(), builder.length() - 1);
@@ -268,7 +268,7 @@ public class OrgQueryBuilder implements Serializable {
 			return "";
 		
 		for (String value: values) {
-			builder.append(column + "='" + value + "'").append(" OR ");
+			builder.append(column).append("='").append(value).append("'").append(" OR ");
 		}
 		
 		builder.delete(builder.length() - " OR ".length(), builder.length() - 1);
@@ -286,7 +286,7 @@ public class OrgQueryBuilder implements Serializable {
 		StringBuilder stringBuilder = new StringBuilder();
 		for (String filename: files) {
 			long fileId = getFileId(filename, context.getContentResolver());
-			stringBuilder.append(OrgData.FILE_ID + "=" + Long.toString(fileId)).append(" OR ");
+			stringBuilder.append(OrgData.FILE_ID + "=").append(Long.toString(fileId)).append(" OR ");
 		}
 		stringBuilder.delete(stringBuilder.length() - " OR ".length(), stringBuilder.length() - 1);
 		

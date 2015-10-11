@@ -67,7 +67,7 @@ public class SSHSynchronizer implements SynchronizerInterface {
         this.port = port;
         this.pubFile = pubFile;
 
-        if (this.path.indexOf("index.org") < 0) {
+        if (!this.path.contains("index.org")) {
             Log.i("MobileOrg", "Invalid ssh path, must point to index.org");
             return "Invalid ssh path, must point to index.org";
         }
@@ -179,7 +179,7 @@ public class SSHSynchronizer implements SynchronizerInterface {
             contents = new StringBuilder();
             String line;
             while ((line = r.readLine()) != null) {
-                contents.append(line + "\n");
+                contents.append(line).append("\n");
             }
             sftpChannel.exit();
         } catch (Exception e) {

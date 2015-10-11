@@ -115,10 +115,9 @@ public class OrgEdit {
 			nodeId = "id:" + nodeId;
 		
 		StringBuilder result = new StringBuilder();
-		result.append("* F(edit:" + getType() + ") [[" + nodeId + "]["
-				+ title.trim() + "]]\n");
-		result.append("** Old value\n" + oldValue.trim() + "\n");
-		result.append("** New value\n" + newValue.trim() + "\n");
+		result.append("* F(edit:").append(getType()).append(") [[").append(nodeId).append("][").append(title.trim()).append("]]\n");
+		result.append("** Old value\n").append(oldValue.trim()).append("\n");
+		result.append("** New value\n").append(newValue.trim()).append("\n");
 		result.append("** End of edit" + "\n\n");
 				
 		return result.toString().replace(":ORIGINAL_ID:", ":ID:");

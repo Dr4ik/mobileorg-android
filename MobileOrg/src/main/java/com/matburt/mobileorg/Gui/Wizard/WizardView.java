@@ -64,6 +64,7 @@ public class WizardView extends HorizontalScrollView implements
 	@Override
 	public void onFinishInflate() {
 		container = (WideLinearLayout) findViewById(R.id.wizard_container);
+        super.onFinishInflate();
 	}
 
 	private static void setButtonState(Button b, boolean state,

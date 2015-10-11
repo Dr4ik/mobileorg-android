@@ -79,7 +79,7 @@ public class FolderAdapter extends ArrayAdapter<String> {
 		}
 		folder = (TextView) row.findViewById(R.id.folder);
 		folder.setText(directory.getDirectoryName(position));
-		folder.setTag(Integer.valueOf(position));
+		folder.setTag(position);
 		check = (CheckBox) row.findViewById(R.id.checkbox);
 		// disable the "Up one level" checkbox; otherwise make sure its enabled
 		if (position == 0 && !directory.isCurrentDirectoryRoot())

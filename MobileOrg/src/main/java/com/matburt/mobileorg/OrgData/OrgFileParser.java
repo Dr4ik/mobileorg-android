@@ -3,6 +3,7 @@ package com.matburt.mobileorg.OrgData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
@@ -273,7 +274,7 @@ public class OrgFileParser {
 			Boolean isDone = false;
 			for (int idx = 1; idx <= m.groupCount(); idx++) {
 				if (m.group(idx) != null && m.group(idx).trim().length() > 0) {
-					if (m.group(idx).indexOf("|") != -1) {
+					if (m.group(idx).contains("|")) {
 						isDone = true;
 						continue;
 					}
@@ -321,9 +322,8 @@ public class OrgFileParser {
 			
 			if(split.length == 1 && split[0].equals(""))
 				return tagList;
-			
-			for(String tag: split)
-				tagList.add(tag);
+
+            Collections.addAll(tagList, split);
 		}
 		
 		return tagList;

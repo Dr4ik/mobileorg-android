@@ -1,7 +1,7 @@
 package com.matburt.mobileorg.OrgData;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
@@ -216,8 +216,7 @@ public class OrgNode {
 		
 		String[] split = tags.split("\\:");
 
-		for (String tag : split)
-			result.add(tag);
+        Collections.addAll(result, split);
 
 		if (tags.endsWith(":"))
 			result.add("");
@@ -276,7 +275,12 @@ public class OrgNode {
 	public OrgNode getParent(ContentResolver resolver) throws OrgNodeNotFoundException {
 		Cursor cursor = resolver.query(OrgData.buildIdUri(this.parentId),
 				OrgData.DEFAULT_COLUMNS, null, null, null);
-		return new OrgNode(cursor);
+        
+        OrgNode result = new OrgNode(cursor); 
+        
+        //cursor.close();
+        
+		return result;
 	}
 	
 	public ArrayList<String> getSiblingsStringArray(ContentResolver resolver) {
@@ -384,10 +388,10 @@ public class OrgNode {
 			
 		OrgNode topNode = nodesFromRoot.get(0);
 		nodesFromRoot.remove(0);
-		result.append("olp:" + topNode.getFilename(resolver) + ":");
+		result.append("olp:").append(topNode.getFilename(resolver)).append(":");
 		
 		for(OrgNode node: nodesFromRoot)
-			result.append(node.getStrippedNameForOlpPathLink() + "/");
+			result.append(node.getStrippedNameForOlpPathLink()).append("/");
 		
 		result.append(getStrippedNameForOlpPathLink());
 		return result.toString();
@@ -530,15 +534,15 @@ public class OrgNode {
 		result.append(" ");
 
 		if (TextUtils.isEmpty(todo) == false)
-			result.append(todo + " ");
+			result.append(todo).append(" ");
 
 		if (TextUtils.isEmpty(priority) == false)
-			result.append("[#" + priority + "] ");
+			result.append("[#").append(priority).append("] ");
 
 		result.append(name);
 		
 		if(tags != null && TextUtils.isEmpty(tags) == false)
-			result.append(" ").append(":" + tags + ":");
+			result.append(" ").append(":").append(tags).append(":");
 		
 
 		if (payload != null && TextUtils.isEmpty(payload) == false)

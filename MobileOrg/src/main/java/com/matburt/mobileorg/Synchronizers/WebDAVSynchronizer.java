@@ -148,9 +148,6 @@ public class WebDAVSynchronizer implements SynchronizerInterface {
                 Log.i("MobileOrg", "Got FNF");
                 throw e;
             }
-            catch (Exception e) {
-                throw e;
-            }
         }
         catch (Exception e) {
             Log.i("MobileOrg", "Test Exception: " + e.getMessage());

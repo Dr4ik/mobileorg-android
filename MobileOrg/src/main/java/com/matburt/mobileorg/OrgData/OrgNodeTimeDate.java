@@ -75,7 +75,7 @@ public class OrgNodeTimeDate {
 	
 	
 	public String toString() {
-		return getDate().toString() + getStartTimeFormated() + getEndTimeFormated();
+		return getDate() + getStartTimeFormated() + getEndTimeFormated();
 	}
 	
 	public String toFormatedString() {
@@ -84,7 +84,7 @@ public class OrgNodeTimeDate {
 
 	
 	private String getStartTimeFormated() {
-		String time = getStartTime().toString();
+		String time = getStartTime();
 
 		if (startTimeOfDay == -1
 				|| startMinute == -1 || TextUtils.isEmpty(time))
@@ -94,7 +94,7 @@ public class OrgNodeTimeDate {
 	}
 	
 	private String getEndTimeFormated() {
-		String time = getEndTime().toString();
+		String time = getEndTime();
 
 		if (endTimeOfDay == -1
 				|| endMinute == -1 || TextUtils.isEmpty(time))

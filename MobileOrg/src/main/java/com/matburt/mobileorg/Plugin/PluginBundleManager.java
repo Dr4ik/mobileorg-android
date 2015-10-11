@@ -85,7 +85,7 @@ public final class PluginBundleManager
          */
         if (2 != bundle.keySet().size())
         {
-            Log.e("MobileOrg", String.format("bundle must contain 2 keys, but currently contains %d keys: %s", Integer.valueOf(bundle.keySet().size()), bundle.keySet()));
+            Log.e("MobileOrg", String.format("bundle must contain 2 keys, but currently contains %d keys: %s", bundle.keySet().size(), bundle.keySet()));
             return false;
         }
 
